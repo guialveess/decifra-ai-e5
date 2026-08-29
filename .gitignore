@@ -1,0 +1,31 @@
+# Compilados
+*.o
+*.out
+*.exe
+build/
+bin/
+
+# Executavel do jogo
+decifra
+decifra-ai
+
+# Haskell
+dist/
+dist-newstyle/
+.stack-work/
+*.hi
+*.dyn_hi
+*.dyn_o
+cabal.project.local
+.ghc.environment.*
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencias
+node_modules/
