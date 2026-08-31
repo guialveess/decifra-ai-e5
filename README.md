@@ -20,6 +20,7 @@ Implementado em **C** na Unidade 1 e **Haskell** na Unidade 2.
 | Pedro Feitosa | Logica Matematica (LMC) |
 | Ademir Pedro da Silva Filho | Motor em C (PIF) |
 | Arthur Vieira Neiva Souza | Haskell (PIF) |
+| Augusto Freitas Wanderley | Engenharia de Software |
 
 ---
 
