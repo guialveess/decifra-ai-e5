@@ -65,3 +65,19 @@ make
 ## Licenca
 
 Projeto academico - CESAR School 2026.
+
+---
+
+## Backlog
+
+<img width="1920" height="1028" alt="Captura de Tela (258)" src="https://github.com/user-attachments/assets/34343ccf-2eea-4343-9907-92d101b7a4f0" />
+
+---
+
+## Board
+
+<img width="1920" height="1031" alt="Captura de Tela (257)" src="https://github.com/user-attachments/assets/8975c89e-ebdf-49e8-8a69-3ed899bfeb8b" />
+
+---
+
+
