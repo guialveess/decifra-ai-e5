@@ -39,15 +39,38 @@ decifra-ai-e5/
 
 ## Como compilar e rodar
 
-> Instrucoes de build serao adicionadas em PI2-56 apos a configuracao do Makefile (PI2-54).
+### Pré-requisitos
+- gcc
+- make
 
-**Pre-requisitos:** gcc, make
+### Instalação das dependências
 
+**Ubuntu/Debian:**
 ```bash
-git clone https://github.com/guialveess/decifra-ai-e5.git
-cd decifra-ai-e5
-make
-./decifra
+sudo apt update
+sudo apt install build-essential
+```
+
+**macOS:**
+```bash
+xcode-select --install
+```
+
+**Windows (recomendado usar WSL):**
+```powershell
+# PowerShell como Administrador
+wsl --install
+
+# Após reiniciar:
+sudo apt update
+sudo apt install build-essential
+```
+
+### Build e Execução
+```bash
+make              # Compila
+make run          # Compila e executa
+make clean        # Limpa arquivos compilados
 ```
 
 ---
