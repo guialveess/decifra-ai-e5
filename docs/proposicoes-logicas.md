@@ -1,15 +1,3 @@
-## Operadores e Conectivos Logicos Utilizados
-
-| Conectivo | Simbolo | Descricao | Resultado |
-|---|---|---|---|
-| Negacao | ~ ou NOT | Inverte o valor logico da proposicao | Verdadeiro vira Falso e vice-versa |
-| Conjuncao | ^ ou AND | Verdadeiro apenas se ambas as proposicoes forem verdadeiras | V AND V = V, qualquer outro caso = F |
-| Disjuncao | v ou OR | Verdadeiro se pelo menos uma proposicao for verdadeira | F OR F = F, qualquer outro caso = V |
-| Condicional | -> ou IMPLICA | Falso apenas quando o antecedente e verdadeiro e o consequente e falso | V IMPLICA F = F, demais casos = V |
-| Bicondicional | <-> ou BICONDICIONAL | Verdadeiro apenas quando as duas proposicoes tem o mesmo valor logico | V BICON V = V, F BICON F = V, demais casos = F |
-
----
-
 **NÍVEL 01 --- Proposições Simples**<br>
 ***
     (1.1) Considere P = Verdadeiro. Qual é o valor lógico de P?
