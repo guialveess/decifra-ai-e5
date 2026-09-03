@@ -70,7 +70,8 @@ Projeto academico - CESAR School 2026.
 
 ## Backlog
 
-<img width="1920" height="1028" alt="Captura de Tela (258)" src="https://github.com/user-attachments/assets/34343ccf-2eea-4343-9907-92d101b7a4f0" />
+<img width="1920" height="968" alt="Captura de Tela (262)" src="https://github.com/user-attachments/assets/bafc4976-c9a4-4516-8d1f-60b9643f258e" />
+
 
 ---
 
