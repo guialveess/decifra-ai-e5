@@ -73,7 +73,7 @@ Projeto academico - CESAR School 2026.
 
 ## Histórias de Usuário
 
-https://docs.google.com/document/d/14-Qs1IytAIkQkP5Q3xof79yqZfvHkl9T4z30iwl_f30/edit?usp=sharing
+https://docs.google.com/document/d/14-Qs1IytAIkQkP5Q3xof79yqZfvHkl9T4z30iwl_f30/edit?tab=t.0
 
 ## Backlog
 
