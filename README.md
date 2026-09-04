@@ -1,5 +1,8 @@
 # Decifra.IA
 
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/edbe883b-94cc-4641-b752-19e4452feeec" />
+
+
 Jogo educacional de terminal para praticar logica matematica e raciocinio computacional.
 
 Desenvolvido por Squad 05 como Projeto Integrador 2P - E5 no CESAR School.
@@ -88,3 +91,22 @@ make clean        # Limpa arquivos compilados
 ## Licenca
 
 Projeto academico - CESAR School 2026.
+
+---
+
+## Histórias de Usuário
+
+https://docs.google.com/document/d/14-Qs1IytAIkQkP5Q3xof79yqZfvHkl9T4z30iwl_f30/edit?tab=t.0
+
+## Backlog
+
+<img width="1920" height="968" alt="Captura de Tela (262)" src="https://github.com/user-attachments/assets/bafc4976-c9a4-4516-8d1f-60b9643f258e" />
+
+
+---
+
+## Board
+
+<img width="1920" height="1031" alt="Captura de Tela (257)" src="https://github.com/user-attachments/assets/8975c89e-ebdf-49e8-8a69-3ed899bfeb8b" />
+
+---

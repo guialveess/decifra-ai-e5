@@ -17,7 +17,7 @@ run: all
 	./$(TARGET)
 
 clean:
-	rm -f *.o $(TARGET)
+	rm -f src/*.o $(TARGET)
 	@echo "Limpeza concluida!"
 
 .PHONY: all run clean

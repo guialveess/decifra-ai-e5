@@ -2,7 +2,11 @@
 #include "ui.h"
 
 void limpar_tela(void) {
-    // por enquanto nao faz nada
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }
 
 void mostrar_menu(void) {
