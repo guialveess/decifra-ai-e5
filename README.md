@@ -1,5 +1,8 @@
 # Decifra.IA
 
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/edbe883b-94cc-4641-b752-19e4452feeec" />
+
+
 Jogo educacional de terminal para praticar logica matematica e raciocinio computacional.
 
 Desenvolvido por Squad 05 como Projeto Integrador 2P - E5 no CESAR School.
