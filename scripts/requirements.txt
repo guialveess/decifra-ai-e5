@@ -1,3 +1,11 @@
-transformers>=4.40
-peft>=0.10
-torch>=2.0
+# Dependências do servidor de inferência LOGI (GGUF via llama-cpp-python)
+llama-cpp-python>=0.3.0
+
+# Instalação com suporte a Metal (Apple Silicon):
+#   CMAKE_ARGS="-DGGML_METAL=on" pip install llama-cpp-python
+#
+# Instalação com suporte a CUDA (NVIDIA):
+#   CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python
+#
+# Instalação apenas CPU:
+#   pip install llama-cpp-python
