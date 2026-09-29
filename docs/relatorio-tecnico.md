@@ -194,36 +194,45 @@ python3 scripts/ai_client.py '<enunciado>'
 
 ### 4.2 `scripts/local_server.py` — Servidor de inferência
 
-Servidor HTTP local (porta 8787) que carrega o modelo LOGI e responde requisições de geração de texto.
+Servidor HTTP local (porta 8787) que carrega o modelo LOGI em formato GGUF via `llama-cpp-python` e responde requisições de geração de texto.
 
 **Carregamento do modelo:**
 ```python
-base    = AutoModelForCausalLM.from_pretrained('Qwen/Qwen2.5-3B-Instruct',
-              dtype=torch.float16, low_cpu_mem_usage=True)
-modelo  = PeftModel.from_pretrained(base, 'guiiwfz/logi')  # aplica LoRA
-device  = 'mps' if torch.backends.mps.is_available() else 'cpu'
-modelo  = modelo.to(device).eval()
+llm = Llama.from_pretrained(
+    repo_id="guiiwfz/logi-1.5b-gguf",
+    filename="*Q4_K_M.gguf",   # ~940 MB; use *Q6_K.gguf para mais qualidade
+    n_ctx=1024,
+    n_gpu_layers=-1,            # usa Metal/CUDA se disponível; 0 para CPU
+)
 ```
 
-**System prompt:**
+O modelo é baixado automaticamente do HuggingFace na primeira execução e cacheado localmente.
+
+**System prompt (mesmo utilizado no treinamento):**
 ```
-Voce e um tutor especializado em logica proposicional.
-Responda passo a passo, usando os operadores: NOT, AND, OR, IMPLICA, BICONDICIONAL.
-Seja claro e didatico. Responda SEMPRE em portugues brasileiro.
+Voce e LOGI, tutor do jogo educativo Decifra.IA.
+Seu escopo inclui logica proposicional, alfabetizacao em IA e seguranca digital
+relacionada ao uso de IA. Responda em portugues, com linguagem simples e correta.
+Em calculos de logica, mostre os passos. Nao invente fontes ou capacidades.
 ```
 
-**Parâmetros de geração:** `max_new_tokens=500`, `temperature=0.3`, `do_sample=True`
+**Parâmetros de geração:** `max_tokens=300`, `temperature=0.2`
 
 ### 4.3 Modelo LOGI
 
 | Atributo | Valor |
 |---|---|
-| Modelo base | `Qwen/Qwen2.5-3B-Instruct` |
-| Adapter (LoRA) | `guiiwfz/logi` |
-| Repositório | [huggingface.co/guiiwfz/logi](https://huggingface.co/guiiwfz/logi) |
-| Tarefa | Geração de dicas didáticas em português sobre lógica proposicional |
-| Device | MPS (Apple Silicon) com fallback para CPU |
-| Status | Fine-tuning em andamento — novos cenários e expansão do dataset |
+| Modelo base | `Qwen/Qwen2.5-1.5B-Instruct` |
+| Repositório ajustado | [huggingface.co/guiiwfz/logi-1.5b-gguf](https://huggingface.co/guiiwfz/logi-1.5b-gguf) |
+| Versão | v5 |
+| Método de fine-tuning | QLoRA 4-bit com Unsloth |
+| LoRA rank / alpha | 32 / 32 |
+| Dataset | 13.000 exemplos próprios (12.350 treino / 650 validação) |
+| Épocas | 3 |
+| Hardware de treino | Tesla T4 no Google Colab |
+| Formato de distribuição | GGUF — Q4_K_M (~940 MB) e Q6_K (~1.2 GB) |
+| Device em produção | Metal (Apple Silicon) com fallback para CPU |
+| Escopo | Lógica proposicional + alfabetização em IA + segurança digital |
 
 ---
 
@@ -290,10 +299,16 @@ make clean
 ### Iniciar o servidor LOGI (opcional)
 
 ```bash
-# Instala dependências Python
-pip install -r scripts/requirements.txt
+# Instala llama-cpp-python (CPU)
+pip install llama-cpp-python
 
-# Inicia o servidor de inferência (porta 8787)
+# Com suporte a Metal (Apple Silicon):
+CMAKE_ARGS="-DGGML_METAL=on" pip install llama-cpp-python
+
+# Com suporte a CUDA (NVIDIA):
+CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python
+
+# Inicia o servidor (o modelo GGUF é baixado automaticamente na 1ª execução)
 python3 scripts/local_server.py
 ```
 

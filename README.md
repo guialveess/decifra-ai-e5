@@ -185,7 +185,7 @@ make clean    # Limpa arquivos compilados
 - [x] Animações fade-in simultâneo com ANSI true-color
 - [x] Spinner braille e alternate screen buffer
 - [x] Posicionamento absoluto de cursor (sem scroll em nenhuma tela)
-- [🔄] Integração com modelo LOGI (bridge C → Python + LoRA Qwen2.5-3B) — em andamento: modelo fine-tunado e funcional para os desafios atuais; treinamento contínuo com novos cenários e expansão do dataset em progresso · [ver modelo no HuggingFace](https://huggingface.co/guiiwfz/logi)
+- [x] Integração com modelo LOGI (bridge C → Python + GGUF via llama-cpp-python) — modelo v5 treinado com 13.000 exemplos (QLoRA, Qwen2.5-1.5B-Instruct, rank 32) · [ver modelo no HuggingFace](https://huggingface.co/guiiwfz/logi-1.5b-gguf)
 - [ ] Motor de lógica proposicional em Haskell (Unidade 2)
 - [ ] Banco de questões expandido com geração via IA
 - [ ] Modo narrativo com falas contextuais da LOGI
