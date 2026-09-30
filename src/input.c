@@ -11,14 +11,12 @@ static void flush_stdin(void) { tcflush(STDIN_FILENO, TCIFLUSH); }
 static void flush_stdin(void) {}
 #endif
 
-/* Consome sequencia de escape CSI (\033[...) ou SS3 (\033O...). */
 static void consumir_escape(void) {
     int c = getchar();
     if (c == '[' || c == 'O')
         while ((c = getchar()) != EOF && !(c >= 0x40 && c <= 0x7E));
 }
 
-/* Le digito 1-9 sem Enter (ICANON off). Descarta escapes de seta/scroll. */
 int ler_opcao(void) {
     int c;
     flush_stdin();
@@ -30,7 +28,6 @@ int ler_opcao(void) {
     }
 }
 
-/* Le V, F ou H sem Enter. Descarta escapes. */
 char ler_resposta(void) {
     int c, up;
     flush_stdin();
@@ -43,7 +40,6 @@ char ler_resposta(void) {
     }
 }
 
-/* Le nome com echo manual (ECHO off globalmente). Backspace apaga. */
 void ler_nome(char *nome, int tamanho) {
     int c, i = 0;
     flush_stdin();

@@ -11,8 +11,6 @@
 
 static struct termios g_orig_term;
 
-/* Raw mode: sem ECHO (escapes de scroll nao aparecem como texto)
- * e sem ICANON (input por caractere, sem aguardar Enter). */
 static void configurar_terminal(void) {
     struct termios raw;
     tcgetattr(STDIN_FILENO, &g_orig_term);
@@ -54,20 +52,31 @@ int main(void) {
         tela_menu();
         opcao = ler_opcao();
 
-        if (opcao == 3) {
+        if (opcao == 5) {
             tela_saida();
             break;
         }
 
-        if (opcao == 2) {
+        if (opcao == 4) {                       /* Nível Avançado */
+            tela_nome();
+            ler_nome(jogador.nome, NOME_MAX);
+            executar_nivel_avancado();
+            continue;
+        }
+
+        if (opcao == 3) {                       /* HU9 — Exemplos */
+            tela_exemplos_escopo();
+            continue;
+        }
+
+        if (opcao == 2) {                       /* Como Jogar */
             tela_como_jogar();
             continue;
         }
 
-        if (opcao != 1) {
-            continue;
-        }
+        if (opcao != 1) continue;
 
+        /* Fluxo normal do jogo */
         tela_loading();
 
         tela_nome();
@@ -75,11 +84,11 @@ int main(void) {
 
         inicializar_jogo();
 
-        for (i = 0; i < NUM_DESAFIOS; i++) {
+        for (i = 0; i < NUM_DESAFIOS_BASE; i++) {
             executar_desafio(i);
         }
 
-        finalizar_jogo();
+        finalizar_jogo(NUM_DESAFIOS_BASE);
     }
 
     restaurar_termios();
