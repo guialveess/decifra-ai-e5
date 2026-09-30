@@ -205,7 +205,7 @@ make clean    # Limpa arquivos compilados
 
 ## Histórias de Usuário
 
-https://docs.google.com/document/d/14-Qs1IytAIkQkP5Q3xof79yqZfvHkl9T4z30iwl_f30/edit?tab=t.0
+https://docs.google.com/document/d/13c8TXvcBQZvWW0u4CU3bT-1qEGknYhz21Lpax1X4rmk/edit?tab=t.0
 
 ### Diagramas de Fluxo (HU1 a HU10)
 
