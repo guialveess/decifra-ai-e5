@@ -6,9 +6,9 @@
 #ifndef _WIN32
 #include <unistd.h>
 #include <termios.h>
-static void flush_stdin(void) { tcflush(STDIN_FILENO, TCIFLUSH); }
+void limpar_stdin(void) { tcflush(STDIN_FILENO, TCIFLUSH); }
 #else
-static void flush_stdin(void) {}
+void limpar_stdin(void) {}
 #endif
 
 static void consumir_escape(void) {
@@ -19,7 +19,7 @@ static void consumir_escape(void) {
 
 int ler_opcao(void) {
     int c;
-    flush_stdin();
+    limpar_stdin();
     while (1) {
         c = getchar();
         if (c == EOF) return 0;
@@ -30,7 +30,7 @@ int ler_opcao(void) {
 
 char ler_resposta(void) {
     int c, up;
-    flush_stdin();
+    limpar_stdin();
     while (1) {
         c = getchar();
         if (c == EOF) return 'F';
@@ -42,7 +42,7 @@ char ler_resposta(void) {
 
 void ler_nome(char *nome, int tamanho) {
     int c, i = 0;
-    flush_stdin();
+    limpar_stdin();
     while (i < tamanho - 1) {
         c = getchar();
         if (c == EOF || c == '\n' || c == '\r') break;

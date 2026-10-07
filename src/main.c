@@ -52,48 +52,37 @@ int main(void) {
         tela_menu();
         opcao = ler_opcao();
 
-        if (opcao == 5) {
-            tela_saida();
-            break;
+        if (opcao == 6) { tela_saida(); break; }
+
+        if (opcao == 5) {                          
+            tela_nome();
+            ler_nome(jogador.nome, NOME_MAX);
+            executar_nivel_contra_tempo();
+            continue;
         }
 
-        if (opcao == 4) {                       /* Nível Avançado */
+        if (opcao == 4) {                          /* Nível Avançado */
             tela_nome();
             ler_nome(jogador.nome, NOME_MAX);
             executar_nivel_avancado();
             continue;
         }
 
-        if (opcao == 3) {                       /* HU9 — Exemplos */
-            tela_exemplos_escopo();
-            continue;
-        }
-
-        if (opcao == 2) {                       /* Como Jogar */
-            tela_como_jogar();
-            continue;
-        }
-
+        if (opcao == 3) { tela_exemplos_escopo(); continue; }
+        if (opcao == 2) { tela_como_jogar();      continue; }
         if (opcao != 1) continue;
 
-        /* Fluxo normal do jogo */
         tela_loading();
-
         tela_nome();
         ler_nome(jogador.nome, NOME_MAX);
-
         inicializar_jogo();
-
-        for (i = 0; i < NUM_DESAFIOS_BASE; i++) {
+        for (i = 0; i < NUM_DESAFIOS_BASE; i++)
             executar_desafio(i);
-        }
-
         finalizar_jogo(NUM_DESAFIOS_BASE);
     }
 
     restaurar_termios();
     printf("\033[?25h\033[?1049l");
     fflush(stdout);
-
     return 0;
 }
