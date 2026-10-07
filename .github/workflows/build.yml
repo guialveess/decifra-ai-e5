@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências
+        run: sudo apt-get update && sudo apt-get install -y gcc make
+
+      - name: Compilar
+        run: make
+
+      - name: Verificar binário
+        run: test -f jogo && echo "Binário gerado com sucesso" || (echo "Binário não encontrado" && exit 1)
+
+      - name: Limpar
+        run: make clean

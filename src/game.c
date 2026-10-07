@@ -218,6 +218,7 @@ static void rodar_desafio(int indice) {
     tela_desafio(indice);
     resposta = ler_resposta();
 
+    /* Jogador pediu ajuda: exibe dica da LOGI e aguarda nova resposta */
     if (resposta == 'H' || resposta == 'h') {
         tela_painel_logi(indice);
         tela_desafio(indice);
@@ -232,7 +233,7 @@ static void rodar_desafio(int indice) {
 
     if (acertou) {
         jogador.acertos++;
-        jogador.pontuacao += desafios[indice].nivel * 10;
+        jogador.pontuacao += desafios[indice].nivel * 10; /* pontos = nível × 10 */
     }
     tela_feedback(acertou, indice);
 }
