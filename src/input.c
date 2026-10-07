@@ -6,14 +6,11 @@
 #ifndef _WIN32
 #include <unistd.h>
 #include <termios.h>
-/* Descarta caracteres pendentes no buffer de entrada (evita leituras sujas) */
-static void flush_stdin(void) { tcflush(STDIN_FILENO, TCIFLUSH); }
+void limpar_stdin(void) { tcflush(STDIN_FILENO, TCIFLUSH); }
 #else
-static void flush_stdin(void) {}
+void limpar_stdin(void) {}
 #endif
 
-/* Consome sequência de escape CSI (\033[...) ou SS3 (\033O...) gerada
- * por teclas especiais (setas, PgUp, etc.) para não poluir a leitura. */
 static void consumir_escape(void) {
     int c = getchar();
     /* Lê até o caractere final do escape (intervalo 0x40–0x7E) */
@@ -21,11 +18,9 @@ static void consumir_escape(void) {
         while ((c = getchar()) != EOF && !(c >= 0x40 && c <= 0x7E));
 }
 
-/* Lê um dígito de 1 a 9 sem aguardar Enter (terminal em raw mode).
- * Descarta sequências de escape (setas, scroll) e qualquer outro caractere. */
 int ler_opcao(void) {
     int c;
-    flush_stdin();
+    limpar_stdin();
     while (1) {
         c = getchar();
         if (c == EOF) return 0;                   /* fim de arquivo: retorna 0 */
@@ -34,11 +29,9 @@ int ler_opcao(void) {
     }
 }
 
-/* Lê a resposta do jogador ao desafio: aceita apenas V (Verdadeiro),
- * F (Falso) ou H (pedir ajuda). Descarta qualquer outro caractere. */
 char ler_resposta(void) {
     int c, up;
-    flush_stdin();
+    limpar_stdin();
     while (1) {
         c = getchar();
         if (c == EOF) return 'F';                  /* fallback seguro em EOF */
@@ -49,11 +42,9 @@ char ler_resposta(void) {
     }
 }
 
-/* Lê o nome do jogador com eco manual (ECHO está desligado globalmente).
- * Suporta backspace para apagar o último caractere digitado. */
 void ler_nome(char *nome, int tamanho) {
     int c, i = 0;
-    flush_stdin();
+    limpar_stdin();
     while (i < tamanho - 1) {
         c = getchar();
         if (c == EOF || c == '\n' || c == '\r') break; /* Enter encerra a leitura */

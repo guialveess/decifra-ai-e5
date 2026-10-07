@@ -1,64 +1,90 @@
 #include <stdio.h>
 #include <string.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <unistd.h>
+#include <ctype.h>
 #include "ai_client.h"
 
-#define PYTHON        "python3"
-#define SCRIPT        "scripts/ai_client.py"
-#define TIMEOUT_TICKS 75
+#define RESP_CAP_INTERNO 512
 
-static void escape_sq(const char *src, char *dst, int max) {
-    int j = 0;
-    for (int i = 0; src[i] && j < max - 4; i++) {
-        if (src[i] == '\'') {
-            dst[j++] = '\''; dst[j++] = '\\';
-            dst[j++] = '\''; dst[j++] = '\'';
-        } else {
-            dst[j++] = src[i];
-        }
+static int append(char *dst, int cap, int used, const char *s) {
+    int n;
+    if (used >= cap - 1) return used;
+    n = snprintf(dst + used, (size_t)(cap - used), "%s", s);
+    if (n < 0)            return used;
+    if (used + n >= cap)  return cap - 1;
+    return used + n;
+}
+
+static int contem(const char *s, const char *needle) {
+    return s && needle && strstr(s, needle) != NULL;
+}
+
+static int not_antes_de_paren(const char *s) {
+    const char *p = s;
+    while ((p = strstr(p, "NOT")) != NULL) {
+        const char *q = p + 3;
+        while (*q == ' ' || *q == '\t') q++;
+        if (*q == '(') return 1;
+        p = q;
     }
-    dst[j] = '\0';
+    return 0;
+}
+
+static int tem_algum_operador(const char *s) {
+    return contem(s, "AND") || contem(s, "OR")  || contem(s, "NOT") ||
+           contem(s, "IMPLICA") || contem(s, "BICONDICIONAL");
 }
 
 int ai_consultar(const char *pergunta, char *resposta, int max_len) {
-    resposta[0] = '\0';
+    int used = 0;
+    int tem_paren, tem_and, tem_or, tem_not, tem_impl, tem_bicon;
 
-    if (access(SCRIPT, F_OK) != 0)
+    if (!pergunta || !resposta || max_len < 64)
         return -1;
 
-    char escaped[1024];
-    escape_sq(pergunta, escaped, sizeof(escaped));
+    resposta[0] = '\0';
 
-    char cmd[2048];
-    snprintf(cmd, sizeof(cmd), PYTHON " " SCRIPT " '%s' 2>/dev/null", escaped);
+    tem_paren = contem(pergunta, "(") || contem(pergunta, ")");
+    tem_and   = contem(pergunta, "AND");
+    tem_or    = contem(pergunta, "OR");
+    tem_not   = contem(pergunta, "NOT");
+    tem_impl  = contem(pergunta, "IMPLICA");
+    tem_bicon = contem(pergunta, "BICONDICIONAL");
 
-    FILE *f = popen(cmd, "r");
-    if (!f) return -1;
+    used = append(resposta, max_len, used, "LOGI: ");
 
-    int fd = fileno(f);
-    fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) | O_NONBLOCK);
-
-    int total = 0, ticks = 0;
-    while (total < max_len - 1 && ticks < TIMEOUT_TICKS) {
-        char tmp[256];
-        int n = (int)fread(tmp, 1, sizeof(tmp), f);
-        if (n > 0) {
-            if (total + n > max_len - 1) n = max_len - 1 - total;
-            memcpy(resposta + total, tmp, n);
-            total += n;
-        }
-        if (feof(f)) break;
-        if (ferror(f) && errno != EAGAIN) break;
-        usleep(80 * 1000);
-        ticks++;
+    if (tem_paren) {
+        used = append(resposta, max_len, used,
+                      "ha parenteses, comece por eles. ");
+        if (not_antes_de_paren(pergunta))
+            used = append(resposta, max_len, used,
+                          "O NOT fora do parenteses so afeta o resultado interno. ");
+        else
+            used = append(resposta, max_len, used,
+                          "Resolva de dentro para fora. ");
+    } else if (tem_not) {
+        used = append(resposta, max_len, used,
+                      "NOT inverte o valor logico. ");
     }
 
-    resposta[total] = '\0';
-    while (total > 0 && (resposta[total - 1] == '\n' || resposta[total - 1] == '\r'))
-        resposta[--total] = '\0';
+    if (tem_and)
+        used = append(resposta, max_len, used,
+                      "AND = V so quando ambos os lados sao V. ");
+    if (tem_or)
+        used = append(resposta, max_len, used,
+                      "OR = V quando ao menos um lado e V. ");
+    if (tem_impl)
+        used = append(resposta, max_len, used,
+                      "IMPLICA = F apenas quando P=V e Q=F. ");
+    if (tem_bicon)
+        used = append(resposta, max_len, used,
+                      "BICONDICIONAL = V quando os dois lados sao iguais. ");
 
-    pclose(f);
-    return (total > 0) ? 0 : -1;
+    if (!tem_paren && !tem_not && !tem_algum_operador(pergunta))
+        used = append(resposta, max_len, used,
+                      "Nao identifiquei operadores; pense em cada conectivo separadamente. ");
+
+    used = append(resposta, max_len, used,
+                  "Ordem: NOT > AND > OR > IMPLICA > BICONDICIONAL.");
+
+    return (used > 0) ? 0 : -1;
 }

@@ -12,8 +12,6 @@
 /* Salva configuração original do terminal para restaurar ao sair */
 static struct termios g_orig_term;
 
-/* Ativa raw mode: desabilita ECHO (evita exibir escapes de scroll como texto)
- * e ICANON (leitura caractere a caractere, sem aguardar Enter). */
 static void configurar_terminal(void) {
     struct termios raw;
     tcgetattr(STDIN_FILENO, &g_orig_term);
@@ -60,42 +58,38 @@ int main(void) {
         tela_menu();
         opcao = ler_opcao();
 
-        if (opcao == 3) {
-            /* Opção Sair: exibe animação de despedida e encerra o loop */
-            tela_saida();
-            break;
-        }
+        if (opcao == 6) { tela_saida(); break; }
 
-        if (opcao == 2) {
-            /* Opção Como Jogar: exibe instruções e volta ao menu */
-            tela_como_jogar();
+        if (opcao == 5) {                          
+            tela_nome();
+            ler_nome(jogador.nome, NOME_MAX);
+            executar_nivel_contra_tempo();
             continue;
         }
 
-        if (opcao != 1) {
-            /* Opção inválida: ignora e reexibe o menu */
+        if (opcao == 4) {                          /* Nível Avançado */
+            tela_nome();
+            ler_nome(jogador.nome, NOME_MAX);
+            executar_nivel_avancado();
             continue;
         }
 
-        /* Opção Jogar: inicializa uma nova partida */
-        tela_loading();   /* animação de inicialização do sistema LOGI */
+        if (opcao == 3) { tela_exemplos_escopo(); continue; }
+        if (opcao == 2) { tela_como_jogar();      continue; }
+        if (opcao != 1) continue;
+
+        tela_loading();
         tela_nome();
-        ler_nome(jogador.nome, NOME_MAX); /* lê o nome do jogador */
-
-        inicializar_jogo(); /* zera pontuação e acertos para a nova partida */
-
-        /* Executa os desafios em sequência (do índice 0 até NUM_DESAFIOS-1) */
-        for (i = 0; i < NUM_DESAFIOS; i++) {
+        ler_nome(jogador.nome, NOME_MAX);
+        inicializar_jogo();
+        for (i = 0; i < NUM_DESAFIOS_BASE; i++)
             executar_desafio(i);
-        }
-
-        finalizar_jogo(); /* exibe tela de resultado final e volta ao menu */
+        finalizar_jogo(NUM_DESAFIOS_BASE);
     }
 
     /* Restaura terminal e alternate screen ao encerrar normalmente */
     restaurar_termios();
     printf("\033[?25h\033[?1049l");
     fflush(stdout);
-
     return 0;
 }
