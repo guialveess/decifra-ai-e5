@@ -205,7 +205,7 @@ make clean    # Limpa arquivos compilados
 
 ## Histórias de Usuário
 
-https://docs.google.com/document/d/13c8TXvcBQZvWW0u4CU3bT-1qEGknYhz21Lpax1X4rmk/edit?tab=t.0
+https://docs.google.com/document/d/1SzixVp4eZ87xHs2-ZFUsQz371UWR0J6m4fWdXbj5Fig/edit?usp=sharing
 
 ### Diagramas de Fluxo (HU1 a HU10)
 
@@ -251,7 +251,7 @@ https://docs.google.com/document/d/13c8TXvcBQZvWW0u4CU3bT-1qEGknYhz21Lpax1X4rmk/
   ![Diagrama HU6](./docs/diagrams/DIAGRAMAHU6.png)
 </details>
 
-### HU7 - Precedência Lógica nos Enunciados
+### HU7 - Feedback Imediato de Resposta
 <details>
   <summary>Clique para visualizar o Diagrama HU7</summary>
   
@@ -278,6 +278,9 @@ https://docs.google.com/document/d/13c8TXvcBQZvWW0u4CU3bT-1qEGknYhz21Lpax1X4rmk/
   
   ![Diagrama HU10](./docs/diagrams/DIAGRAMAHU10.png)
 </details>
+
+### HU11 - Modo Contra-Tempo
+
 
 ---
 
