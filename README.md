@@ -255,7 +255,7 @@ https://docs.google.com/document/d/1SzixVp4eZ87xHs2-ZFUsQz371UWR0J6m4fWdXbj5Fig/
 <details>
   <summary>Clique para visualizar o Diagrama HU7</summary>
   
-  ![Diagrama HU7](./docs/diagrams/DIAGRAMAHU7_.png)
+  ![Diagrama HU7](./docs/diagrams/diagramahu7__.png)
 </details>
 
 ### HU8 - Sistema de Ajuda Contextual (Tutora LOGI)
@@ -280,7 +280,11 @@ https://docs.google.com/document/d/1SzixVp4eZ87xHs2-ZFUsQz371UWR0J6m4fWdXbj5Fig/
 </details>
 
 ### HU11 - Modo Contra-Tempo
-
+<details>
+  <summary>Clique para visualizar o Diagrama HU10</summary>
+  
+  ![Diagrama HU10](./docs/diagrams/diagramahu11.png)
+</details>
 
 ---
 
